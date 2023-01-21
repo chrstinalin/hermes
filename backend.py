@@ -1,11 +1,15 @@
 """
 Class files.
 """
+from typing import Any
+
+import backoff
 import datetime
 import openai
 from iso3166 import countries
+from openai.error import RateLimitError
 
-openai.api_key = "APIKEY"
+openai.api_key = "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"
 
 
 class Attraction:
@@ -49,6 +53,7 @@ class CityItinerary:
     image: image url of the city.
     attractions: list of attractions.
     restaurants: list of restaurants.
+    coordinates: tuple, longitude-latitude
     """
     city: str
     desc: str
@@ -57,6 +62,7 @@ class CityItinerary:
     image: str
     attractions: list[Attraction]
     restaurants: list[Attraction]
+    coordinates: tuple[float, float]  # longitude-latitude
 
     def __init__(self, city: str, desc: str, start_date: datetime.datetime, end_date: datetime.datetime, image: str, attractions: list[Attraction], restaurants: list[Attraction]) -> None:
         self.city = city
@@ -90,10 +96,10 @@ def generate_single_day_attractions(number_of_attractions: int, city: str, keywo
     :return: a list of Attraction objects.
     """
     attractions = list()
-    attraction_names = list(filter(None, openai.Completion.create(max_tokens=50, temperature=0, engine="text-curie-001", prompt="List of Names of " + number_of_attractions.__str__() + " " + attraction_type + "s to visit in \"" + city + "\", based on the keywords: \"" + keywords + "\"").choices[0].text.split("\n")))
+    attraction_names = list(filter(None, ai_call(max_tokens=50, temperature=0.5, prompt="Reddit List of Names of " + number_of_attractions.__str__() + " " + attraction_type + "s to visit in \"" + city + "\", based on the keywords: \"" + keywords + "\"").choices[0].text.split("\n")))
 
     for attraction in attraction_names:
-        desc = openai.Completion.create(max_tokens=200, temperature=0, engine="text-curie-001", prompt="Describe the " + attraction_type + " " + attraction + " in " + city + "in one paragraph").choices[0].text.strip()
+        desc = ai_call(max_tokens=200, temperature=0.5, prompt="Describe the " + attraction_type + " " + attraction + " in " + city + "in one paragraph").choices[0].text.strip()
         attractions.append(Attraction(attraction, desc, attraction_type))
         # TODO: Longitude-Latitude Information.
 
@@ -109,7 +115,7 @@ def generate_city_itinerary(city: str, start_end: tuple[datetime.datetime, datet
     attractions = generate_single_day_attractions(total_days * 3, city, keywords, "attraction")  # TODO: Remove hardcode, perhaps as a user slider
     restaurants = generate_single_day_attractions(total_days * 3, city, keywords, "restaurant")
 
-    desc = openai.Completion.create(max_tokens=200, temperature=0, engine="text-curie-001", prompt="Describe " + city + " in " + "in one paragraph").choices[0].text
+    desc = ai_call(max_tokens=200, temperature=0.5, prompt="Describe " + city + " in " + "in one paragraph").choices[0].text
 
     image = ""  # TODO: Image of the city
 
@@ -123,8 +129,8 @@ def generate_itinerary(locations: dict[str: tuple[datetime.datetime, datetime.da
 
     for location_name in locations:
 
-        if countries.get(location_name):  # TODO: Countries, add variability in number of cities (will require calculating date ranges)
-            cities = openai.Completion.create(max_tokens=100, temperature=0, engine="text-curie-001", prompt="Best city to visit in " + countries.get(location_name).name + "").choices[0].text.split("\n")
+        if countries.__contains__(location_name):  # TODO: Countries, add variability in number of cities (will require calculating date ranges)
+            cities = ai_call(max_tokens=100, prompt="Best city to visit in " + countries.get(location_name).name + "").choices[0].text.split("\n")
             for city in cities:
                 final_itinerary.append(generate_city_itinerary(city, locations[location_name], keywords))
         else:
@@ -134,7 +140,23 @@ def generate_itinerary(locations: dict[str: tuple[datetime.datetime, datetime.da
 
     return final_itinerary
 
+
+@backoff.on_exception(backoff.expo, RateLimitError)
+def ai_call(max_tokens: int, temperature: float, prompt: str) -> Any:
+    return openai.Completion.create(max_tokens=max_tokens, temperature=temperature, engine="text-curie-001", prompt=prompt)
+
+
 # if __name__ == '__main__':
-#     attractions = generateSingleDayAttractions(5, "Vancouver, British Columbia", "Family-Friendly", "attraction")
-#     for attraction in attractions:
-#         print(attraction.name() + "\n" + attraction.desc())
+#     itinerary = generate_itinerary({"Budapest, Hungary": (datetime.datetime(2020, 1, 1), datetime.datetime(2020, 1, 3)), "Vancouver, Canada":(datetime.datetime(2020, 1, 4), datetime.datetime(2020, 1, 5))}, "Family-Friendly, Vegetarian")
+#
+#     for cityitinerary in itinerary:
+#
+#         print(cityitinerary.city + " " + cityitinerary.desc)
+#
+#         for attraction in cityitinerary.attractions:
+#             print(attraction.name() + ": " + attraction.desc())
+#
+#         for restaurant in cityitinerary.restaurants:
+#             print(restaurant.name() + ": " + restaurant.desc())
+#
+#         print("\n")
