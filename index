@@ -11,23 +11,28 @@
 <body>
     <div class="header">
         <div class="logo">
-            <img class = "logo-pic" src="imm1.png" alt="Hermes">
+            <img class = "logo-pic" src="imm1.png" alt="placeholder">
             <span>Hermes</span>
     </div>
 
-    <div class="menu">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </div>
     <div class = "form-container" id = "form-container">
         <input type="text" id="input-from" placeholder="From">
         <input type="text" id="input-to" placeholder="To">
         <input type="text" id="input-Y" placeholder="I want to....">
         <input type="button"id="button-go" value="Go">
-        
+    </div>
+
+    <div class="menu-container">
+        <ul>
+          <li class ="menu">
+            <span>Menu</span>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+          </li>
+        </ul>
     </div>
 </body>
 </html>
