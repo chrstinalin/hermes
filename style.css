@@ -1,5 +1,5 @@
 body{
-    overflow-y: hidden;
+    
     overflow-x: hidden;
     background-color:#252525;
 }
@@ -22,120 +22,42 @@ body{
     height: 10vh;
     float:left;
 }
-.background{
-  overflow: hidden;
-  position:absolute;
-  height:100%;
-  width:100%;
-  top:0;
-  left:0;
-  z-index: -1;
-}
-
-.form-container form input::placeholder{
-    color: black;
-
-}
-
 .form-container input{
-    
     border: none;
+    color: white;
     font-size: 1.5em;
     font-family: 'Roboto', sans-serif;
     padding: 0.5em;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
     background: transparent;
 }
 
 .form-container{
     position:relative;
     top: 30vh;
-    left: 50vh;   
-
+    left: 50vh;
+    
+    
 }
-.menu-container{
-  width: 100%;
-  height: 100%;
-
-}
-.Menu{
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 10%;
-  width: 5%;
+.menu-container {
+    position:absolute;
+    right: 0;
+    top: 0;
 }
 ul{
     list-style-type: none;
 }
 .menu-container ul ul {
     list-style-type: none;
-    position: absolute;
-    top: 0;
-    right: 0;
     display: none;
-}
+  }
 .menu-container li:hover ul {
-    padding-top: 6%;
     list-style-type: none;
     display: block;
 }
 
-/* Google Map/Page 2 styling */
 .googleMap{
     position: absolute;
     height: 100%;
     width: 100%;
 }
-
-.container2{
-    border-style: dotted;
-    position: absolute;
-    background-color: transparent;
-    height: 100%;
-    width:35%;
-    left:5%;
-}
-
-/* Loading-screen styling */
-.load-row {
-  position:absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-    
-}
-  
-  .load-row span {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background: #f76002;
-    border-radius: 50px;
-    animation: up-down6 0.5s ease-in infinite alternate;
-  }
-  
-  .load-row span:nth-child(2) {
-    background: #e85b04c4;
-    animation-delay: 0.16s;
-  }
-  
-  .load-row span:nth-child(3) {
-    background: #e85b0491;
-    animation-delay: 0.32s;
-  }
-  
-  .load-row span:nth-child(4) {
-    background: #e85b0456;
-    animation-delay: 0.48s;
-  }
-  
-  @keyframes up-down6 {
-    0% {
-      transform: translateY(-10px);
-    }
-  
-    100% {
-      transform: translateY(10px);
-    }
-  }
