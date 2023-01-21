@@ -15,11 +15,22 @@ body{
     height: 10vh;
     float:left;
 }
+.form-container{
+    
+}
+.form-container input{
 
-
+    border: none;
+    background-color: #252525;
+    color: white;
+    font-size: 1.5em;
+    font-family: 'Roboto', sans-serif;
+    padding: 0.5em;
+    border-bottom: 1px solid white;
+}
 
 .form-container{
-    width: 10%;
+    width: 45%;
     height: 10%;
     position:relative;
     top: 30vh;
@@ -27,7 +38,7 @@ body{
 }
 .menu-container {
     position: relative;
-    position: absolute;
+    position:absolute;
     right: 0;
     top: 0;
 }
