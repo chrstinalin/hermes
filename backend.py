@@ -146,17 +146,17 @@ def ai_call(max_tokens: int, temperature: float, prompt: str) -> Any:
     return openai.Completion.create(max_tokens=max_tokens, temperature=temperature, engine="text-curie-001", prompt=prompt)
 
 
-if __name__ == '__main__':
-    # itinerary = generate_itinerary({"Budapest, Hungary": (datetime.datetime(2020, 1, 1), datetime.datetime(2020, 1, 3)), "Vancouver, Canada":(datetime.datetime(2020, 1, 4), datetime.datetime(2020, 1, 5))}, "Family-Friendly, Vegetarian")
-    #
-    # for cityitinerary in itinerary:
-    #
-    #     print(cityitinerary.city + " " + cityitinerary.desc)
-    #
-    #     for attraction in cityitinerary.attractions:
-    #         print(attraction.name() + ": " + attraction.desc())
-    #
-    #     for restaurant in cityitinerary.restaurants:
-    #         print(restaurant.name() + ": " + restaurant.desc())
-    #
-    #     print("\n")
+# if __name__ == '__main__':
+#     itinerary = generate_itinerary({"Budapest, Hungary": (datetime.datetime(2020, 1, 1), datetime.datetime(2020, 1, 3)), "Vancouver, Canada":(datetime.datetime(2020, 1, 4), datetime.datetime(2020, 1, 5))}, "Family-Friendly, Vegetarian")
+#
+#     for cityitinerary in itinerary:
+#
+#         print(cityitinerary.city + " " + cityitinerary.desc)
+#
+#         for attraction in cityitinerary.attractions:
+#             print(attraction.name() + ": " + attraction.desc())
+#
+#         for restaurant in cityitinerary.restaurants:
+#             print(restaurant.name() + ": " + restaurant.desc())
+#
+#         print("\n")
