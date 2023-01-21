@@ -54,7 +54,7 @@ ul{
     list-style-type: none;
     display: block;
 }
-.googleMaps{
+.googleMap{
     position:absolute;
     height:100%
     width:100%

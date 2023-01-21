@@ -1,19 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
-    <title>Hermes</title>
-</head>
-
+<html>
 <body>
 
-<h1>My First Google Map</h1>
 
-<div id="googleMap" class="googleMaps"></div>
+<div id="googleMap" style="width:100%;height:700px;"></div>
 
 <script>
 function myMap() {
@@ -25,6 +15,7 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 }
 
 </script>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0InFNkcG7UtX5Fd9A5i0vZUpZCDwP6d4&callback=myMap"></script>
 
 </body>
