@@ -5,7 +5,7 @@ import datetime
 import openai
 from iso3166 import countries
 
-openai.api_key = "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"
+openai.api_key = "APIKEY"
 
 
 class Attraction:
