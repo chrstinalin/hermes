@@ -1,9 +1,16 @@
 body{
-    background-color: #252525;
+    
+    overflow-x: hidden;
+    background-color:#252525;
+}
+
+.page1{
+    position:absolute;
     height:100%;
     width:100%;
 }
 .logo{
+    color:wheat;
     width:15%;
     height: 15%;
     font-family: 'Roboto', sans-serif;
@@ -15,29 +22,24 @@ body{
     height: 10vh;
     float:left;
 }
-.form-container{
-    
-}
 .form-container input{
-
     border: none;
-    background-color: #252525;
     color: white;
     font-size: 1.5em;
     font-family: 'Roboto', sans-serif;
     padding: 0.5em;
     border-bottom: 1px solid white;
+    background: transparent;
 }
 
 .form-container{
-    width: 45%;
-    height: 10%;
     position:relative;
     top: 30vh;
     left: 50vh;
+    
+    
 }
 .menu-container {
-    position: relative;
     position:absolute;
     right: 0;
     top: 0;
@@ -52,4 +54,10 @@ ul{
 .menu-container li:hover ul {
     list-style-type: none;
     display: block;
+}
+
+.googleMap{
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
