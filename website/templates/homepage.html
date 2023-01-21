@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <title>Hermes</title>
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <img class="logo-pic" src="imm1.png" alt="placeholder">
+        <span>Hermes</span>
+    </div>
+
+    <div class="form-container" id="form-container">
+        <input type="text" id="input-from" placeholder="From">
+
+        <input type="button" id="button-go" value="Go">
+    </div>
+
+    <div class="menu-container">
+        <ul>
+            <li class="menu">
+                <span>Menu</span>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
