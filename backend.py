@@ -1,8 +1,6 @@
 """
 Class files.
 """
-import urllib.request
-import json
 import datetime
 import openai
 from iso3166 import countries
@@ -75,7 +73,7 @@ def daterange(start_date: datetime.datetime, end_date: datetime.datetime):
     Helper function. Given a start and end date, returns an iterator through each day.
     :param start_date: Day to start at.
     :param end_date: Day to end at.
-    :return:
+    :return: 
     """
     for i in range(int((end_date - start_date).days)):
         yield start_date + datetime.timedelta(i)
@@ -96,21 +94,8 @@ def generate_single_day_attractions(number_of_attractions: int, city: str, keywo
 
     for attraction in attraction_names:
         desc = openai.Completion.create(max_tokens=200, temperature=0, engine="text-curie-001", prompt="Describe the " + attraction_type + " " + attraction + " in " + city + "in one paragraph").choices[0].text.strip()
-
-        # Loads the json file containing the coordinates of the attraction
-        json_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + attraction.replace(" ", "%") + "&key=AIzaSyA0InFNkcG7UtX5Fd9A5i0vZUpZCDwP6d4"
-        with urllib.request.urlopen(json_url) as url:
-            data = json.load(url)
-
-        # Extracts the coordinates
-        lat = data["results"][0]["geometry"]["location"]["lat"]
-        long = data["results"][0]["geometry"]["location"]["lng"]
-        coordinates = (lat, long)
-
-        # Creates an Attraction
-        a = Attraction(attraction, desc, attraction_type)
-        a.coordinates = coordinates
-        attractions.append(a)
+        attractions.append(Attraction(attraction, desc, attraction_type))
+        # TODO: Longitude-Latitude Information.
 
     return attractions
 
