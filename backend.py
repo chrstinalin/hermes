@@ -7,8 +7,8 @@ import datetime
 import openai
 from iso3166 import countries
 
-openai.api_key = "APIKEY"
-
+openai.api_key = ""
+google_cloud_key = ""
 
 class Attraction:
     """
@@ -41,6 +41,10 @@ class Attraction:
         """
         return self._type
 
+    def get_coordinates(self) -> tuple[float, float]:
+        """:return: coordinates.
+        """
+        return self.coordinates
 
 class CityItinerary:
     """ The itinerary for a given city.
@@ -98,14 +102,14 @@ def generate_single_day_attractions(number_of_attractions: int, city: str, keywo
         desc = openai.Completion.create(max_tokens=200, temperature=0, engine="text-curie-001", prompt="Describe the " + attraction_type + " " + attraction + " in " + city + "in one paragraph").choices[0].text.strip()
 
         # Loads the json file containing the coordinates of the attraction
-        json_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + attraction.replace(" ", "%") + "&key=AIzaSyA0InFNkcG7UtX5Fd9A5i0vZUpZCDwP6d4"
+        json_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + attraction.replace(" ", "%") + "&key=" + google_cloud_key
         with urllib.request.urlopen(json_url) as url:
             data = json.load(url)
 
         # Extracts the coordinates
         lat = data["results"][0]["geometry"]["location"]["lat"]
         long = data["results"][0]["geometry"]["location"]["lng"]
-        coordinates = (lat, long)
+        coordinates = lat, long
 
         # Creates an Attraction
         a = Attraction(attraction, desc, attraction_type)
@@ -149,7 +153,8 @@ def generate_itinerary(locations: dict[str: tuple[datetime.datetime, datetime.da
 
     return final_itinerary
 
-# if __name__ == '__main__':
-#     attractions = generateSingleDayAttractions(5, "Vancouver, British Columbia", "Family-Friendly", "attraction")
-#     for attraction in attractions:
-#         print(attraction.name() + "\n" + attraction.desc())
+if __name__ == '__main__':
+    attractions = generate_single_day_attractions(5, "Vancouver, British Columbia", "Family-Friendly", "attraction")
+    for attraction in attractions:
+        print(attraction.name() + "\n" + attraction.desc())
+        print(attraction.get_coordinates())
