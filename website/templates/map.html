@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
 <body>
 
 
-<div id="googleMap" style="width:100%;height:700px;"></div>
+  <div id="googleMap" class = "googleMap"></div>
 
 <script>
 function myMap() {
 var mapProp= {
+  mapId: "b1c2f738a5a72a98",
   center:new google.maps.LatLng(51.508742,-0.120850),
   zoom:5,
+  streetViewControl: false,
+  mapTypeControl: false,
+  fullscreenControl: false,
 };
 var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 }
@@ -17,6 +28,16 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0InFNkcG7UtX5Fd9A5i0vZUpZCDwP6d4&callback=myMap"></script>
+      <div class = "data-container">
+        <div class = "photo">
+            <img src="imm3.jpg" alt="placeholder">
+        <ul>
+            <li>A</li>
+            <li>B</li>
+            <li>A</li>
+            <li>B</li>
+        </ul>
+    </div>
 
 </body>
 </html>
