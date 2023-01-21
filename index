@@ -17,8 +17,6 @@
 
     <div class = "form-container" id = "form-container">
         <input type="text" id="input-from" placeholder="From">
-        <input type="text" id="input-to" placeholder="To">
-        <input type="text" id="input-Y" placeholder="I want to....">
         <input type="button"id="button-go" value="Go">
     </div>
 
