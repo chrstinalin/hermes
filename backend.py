@@ -1,15 +1,19 @@
 """
 Class files.
 """
+import requests
+import json
 from typing import Any
-
+from unidecode import unidecode
 import backoff
 import datetime
 import openai
 from iso3166 import countries
 from openai.error import RateLimitError
 
-openai.api_key = "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"
+
+openai.api_key = ""
+google_cloud_key = ""
 
 
 class Attraction:
@@ -43,6 +47,10 @@ class Attraction:
         """
         return self._type
 
+    def get_coordinates(self) -> tuple[float, float]:
+        """:return: coordinates.
+        """
+        return self.coordinates
 
 class CityItinerary:
     """ The itinerary for a given city.
@@ -97,11 +105,32 @@ def generate_single_day_attractions(number_of_attractions: int, city: str, keywo
     """
     attractions = list()
     attraction_names = list(filter(None, ai_call(max_tokens=50, temperature=0.5, prompt="Reddit List of Names of " + number_of_attractions.__str__() + " " + attraction_type + "s to visit in \"" + city + "\", based on the keywords: \"" + keywords + "\"").choices[0].text.split("\n")))
-
+    
     for attraction in attraction_names:
-        desc = ai_call(max_tokens=200, temperature=0.5, prompt="Describe the " + attraction_type + " " + attraction + " in " + city + "in one paragraph").choices[0].text.strip()
-        attractions.append(Attraction(attraction, desc, attraction_type))
-        # TODO: Longitude-Latitude Information.
+        desc = ai_call(max_tokens=200, temperature=0, prompt="Describe the " + attraction_type + " " + attraction + " in " + city + "in one paragraph").choices[0].text.strip()
+
+        # Loads the json file containing the coordinates of the attraction
+        attraction_name = unidecode(attraction[3:].replace(" ", "%").replace("\'", "") + "%" + city)
+
+        json_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + attraction_name + "&key=" + google_cloud_key
+
+        r = requests.get(json_url)
+        data = r.json()
+
+        # Extracts the coordinates
+        try:
+            lat = data["results"][0]["geometry"]["location"]["lat"]
+            long = data["results"][0]["geometry"]["location"]["lng"]
+            coordinates = lat, long
+
+        except IndexError:
+            print("Error, location not found of " + attraction)
+
+        # Creates an Attraction
+        a = Attraction(attraction, desc, attraction_type)
+        a.coordinates = (lat, long)
+        attractions.append(a)
+
 
     return attractions
 
@@ -146,17 +175,18 @@ def ai_call(max_tokens: int, temperature: float, prompt: str) -> Any:
     return openai.Completion.create(max_tokens=max_tokens, temperature=temperature, engine="text-curie-001", prompt=prompt)
 
 
-# if __name__ == '__main__':
-#     itinerary = generate_itinerary({"Budapest, Hungary": (datetime.datetime(2020, 1, 1), datetime.datetime(2020, 1, 3)), "Vancouver, Canada":(datetime.datetime(2020, 1, 4), datetime.datetime(2020, 1, 5))}, "Family-Friendly, Vegetarian")
-#
-#     for cityitinerary in itinerary:
-#
-#         print(cityitinerary.city + " " + cityitinerary.desc)
-#
-#         for attraction in cityitinerary.attractions:
-#             print(attraction.name() + ": " + attraction.desc())
-#
-#         for restaurant in cityitinerary.restaurants:
-#             print(restaurant.name() + ": " + restaurant.desc())
-#
-#         print("\n")
+if __name__ == '__main__':
+    itinerary = generate_itinerary({"Toronto, Canada": (datetime.datetime(2020, 1, 1), datetime.datetime(2020, 1, 3)), "Vancouver, Canada":(datetime.datetime(2020, 1, 4), datetime.datetime(2020, 1, 5))}, "Family-Friendly, Vegetarian")
+
+    for cityitinerary in itinerary:
+        print(cityitinerary.city + " " + cityitinerary.desc)
+
+        for attraction in cityitinerary.attractions:
+            print(attraction.name() + ": " + attraction.desc())
+            print(attraction.get_coordinates())
+
+        for restaurant in cityitinerary.restaurants:
+            print(restaurant.name() + ": " + restaurant.desc())
+            print(restaurant.get_coordinates())
+
+        print("\n")
