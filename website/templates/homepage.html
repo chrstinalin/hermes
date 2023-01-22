@@ -5,35 +5,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Hermes</title>
 </head>
+
 <body>
-<div class="header">
-    <div class="logo">
-        <img class="logo-pic" src="imm1.png" alt="placeholder">
-        <span>Hermes</span>
+
+
+
+
+    <div class="header">
+        <div class="logo">
+            <img src="asset/placeholder.png" alt="N" width="300", height="auto">
+        </div>
+        <div class = "homepage-container">
+            <div class="form-container" id="form-container">
+                <div id="input-container">
+                    <div class="inpt-containr">
+                        <input type="text" id="input-from" placeholder="Location" style="border:1px solid #ccc;border-radius: 5px / 10px">
+                        <input type="date" id="time-from">
+                        <img src="asset/back.png" alt="N">
+                        <input type="date" id="time-to">
+                    </div>
+                </div>
+                <input class="text" type="text" id="input-to" placeholder="Keyword" style="border:1px solid #ccc;border-radius: 5px / 10px">
+                <button class="add-more" >Add More</button>
+                <a href="map.html">Go</a>
+            </div>
+        </div>
+        <div class="menu-container">
+            <ul>
+                <li class="menu">
+                    <img src="asset/menu.png" alt="N">
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div class="form-container" id="form-container">
-        <input type="text" id="input-from" placeholder="From">
-        <input type="date" id="time-from">
-        <input type="date" id="time-to">
-        <a href="/map">GO</a>
-    </div>
-
-    <div class="menu-container">
-        <ul>
-            <li class="menu">
-                <span>Menu</span>
-                <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
+    <script>
+        $(document).ready(function () {
+            var count = 0;
+            var maxClicks = 5;
+            $(document).on("click", ".add-more", function () {
+                if (count >= maxClicks) {
+                    return;
+                }
+                var inputFields = $(".inpt-containr").html();
+                var newInputs = $('<div class="inpt-containr">' + inputFields + '</div>');
+                newInputs.hide();
+                $("#input-container").append(newInputs);
+                newInputs.fadeIn(1000);
+                $(".inpt-containr:last input").each(function () {
+                    $(this).attr("id", $(this).attr("id") + count);
+                    $(this).val("");
+                });
+                count++;
+            });
+        });
+    </script>
 </body>
+
 </html>
