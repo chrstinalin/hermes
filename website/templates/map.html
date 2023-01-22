@@ -1,33 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="style.css">
+  <title>Google Maps Multiple Markers</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0InFNkcG7UtX5Fd9A5i0vZUpZCDwP6d4&callback=myMap"
+          type="text/javascript"></script>
 </head>
 <body>
+  <div id="map" class="googleMap"></div>
 
+  <script type="text/javascript">
+    var locations = [
+      ['Bondi Beach', -33.890542, 151.274856, 4],
+      ['Coogee Beach', -33.923036, 151.259052, 5],
+      ['Cronulla Beach', -34.028249, 151.157507, 3],
+      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+      ['Maroubra Beach', -33.950198, 151.259302, 1]
+    ]; //TODO: Pass mapping of location name:
 
-  <div id="googleMap" class = "googleMap"></div>
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: new google.maps.LatLng(-33.92, 151.25), //TODO: Calculate lat-long center?
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapId: "b1c2f738a5a72a98",
+      streetViewControl: false,
+      mapTypeControl: false,
+      fullscreenControl: false,
+    });
 
-<script>
-function myMap() {
-var mapProp= {
-  mapId: "b1c2f738a5a72a98",
-  center:new google.maps.LatLng(51.508742,-0.120850),
-  zoom:5,
-  streetViewControl: false,
-  mapTypeControl: false,
-  fullscreenControl: false,
-};
-var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-}
+    var infowindow = new google.maps.InfoWindow();
 
-</script>
+    var marker, i;
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0InFNkcG7UtX5Fd9A5i0vZUpZCDwP6d4&callback=myMap"></script>
+    const image = "https://raw.githubusercontent.com/chrstinalin/hermes/master/website/templates/asset/pin.png"
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map,
+        icon: image
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+
       <div class = "data-container">
         <div class = "photo">
             <img src="imm3.jpg" alt="placeholder">
@@ -38,6 +61,7 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
             <li>B</li>
         </ul>
     </div>
+
 
 </body>
 </html>
