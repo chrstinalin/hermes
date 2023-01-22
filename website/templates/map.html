@@ -33,13 +33,11 @@
 
     var marker, i;
 
-    const image = "https://raw.githubusercontent.com/chrstinalin/hermes/master/website/templates/asset/pin.png"
-
     for (i = 0; i < locations.length; i++) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
         map: map,
-        icon: image
+        icon: "https://raw.githubusercontent.com/chrstinalin/hermes/master/website/templates/asset/pin.png",
       });
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
