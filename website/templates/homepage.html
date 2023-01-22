@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Hermes</title>
 </head>
 <body>
@@ -16,18 +17,25 @@
     </div>
 
     <div class="form-container" id="form-container">
-        <input type="text" id="input-from" placeholder="From">
-        <input type="date" id="time-from">
-        <input type="date" id="time-to">
-        <a href="/map">GO</a>
-    </div>
 
+        <div id="input-container">
+            <div class="inpt-containr">
+                <input type="text" id="input-from" placeholder="From">
+                <input type="date" id="time-from">
+                <input type="date" id="time-to">
+            </div>
+        </div>
+
+
+        <div class="next-btn">
+            <button id="add-more">Add More</button>
+            <a href="map.html">GO</a>
+    </div>
     <div class="menu-container">
         <ul>
             <li class="menu">
                 <span>Menu</span>
                 <ul>
-                    <li><a href="">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                 </ul>
@@ -35,5 +43,22 @@
         </ul>
     </div>
 </div>
+
+<script>
+    
+    $(document).ready(function(){
+  var count = 0;
+  $("#add-more").click(function(){
+    var inputFields = $("#input-container").html();
+    $("#input-container").append('<div class="inpt-containr">' + inputFields + '</div>');
+    $(".inpt-containr:last input").each(function(){
+      $(this).attr("id", $(this).attr("id") + count);
+      $(this).val("");
+    });
+    count++;
+  });
+});
+
+</script>
 </body>
 </html>
