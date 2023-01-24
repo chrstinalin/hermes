@@ -5,4 +5,4 @@ Often times, the hassle of creating the perfect trip while avoiding tourists tra
 Simply input the cities or countries you’d like to visit, dates, as well as a few key words to describe your trip, and HermesAI will spit out an itinerary tailor made to your requests – all on a simple and easy-to-use UI!
 
 
- ![preview](https://keep.google.com/u/0/media/v2/1-j9oougCRcmk2HuXv2en0DZBvev8uaAsN99MM8EGbA4nueNPUhuPjravFJAP/12zIsYSKptc2YC2TI_gs4DXBgUNqDgo7WtT98ujz1oSI6LaypSkske5JGWgE-4A?accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp%2Caudio%2Faac&sz=1600)
+ ![preview](https://raw.githubusercontent.com/chrstinalin/hermes/8ca42ff8cefc471bb895f2c646b0f8bc9c8a3075/website/templates/asset/preview.png)
